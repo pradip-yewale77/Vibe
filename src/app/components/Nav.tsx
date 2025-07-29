@@ -107,19 +107,15 @@ export function Nav() {
           </span>
         </Link>
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center justify-center flex-1">
-          <NavigationMenu>
-            <NavigationMenuList className="gap-1">
-              <NavigationMenuItem>
-                <Link href="/" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    <FiHome className="mr-2" />
-                    Home
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
+        {/* Navigation Menu */}
+        <nav className="hidden md:flex items-center gap-4">
+          <Link href="/" className={navigationMenuTriggerStyle()}>
+            <FiHome className="mr-2" />
+            Home
+          </Link>
 
+          <NavigationMenu>
+            <NavigationMenuList>
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="flex items-center">
                   <FiGrid className="mr-2" />
@@ -127,7 +123,7 @@ export function Nav() {
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="rounded-xl shadow-xl border border-gray-100 dark:border-zinc-800 overflow-hidden">
                   <div className="grid gap-4 p-4 md:w-[500px] lg:w-[600px] lg:grid-cols-2">
-                    {/* Left: Template Gallery */}
+                    {/* Left Panel */}
                     <div className="flex flex-col justify-center p-6 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-zinc-800 dark:to-zinc-900 rounded-lg">
                       <div className="mt-4 mb-2 text-lg font-medium flex items-center">
                         <span className="bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2">
@@ -148,7 +144,7 @@ export function Nav() {
                       </Button>
                     </div>
 
-                    {/* Right: List of templates */}
+                    {/* Right Panel */}
                     <ul className="grid gap-2">
                       {templates.slice(0, 4).map((template) => (
                         <ListItem
@@ -163,18 +159,14 @@ export function Nav() {
                   </div>
                 </NavigationMenuContent>
               </NavigationMenuItem>
-
-              <NavigationMenuItem>
-                <Link href="/docs" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    <FiFileText className="mr-2" />
-                    Documentation
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
-        </div>
+
+          <Link href="/docs" className={navigationMenuTriggerStyle()}>
+            <FiFileText className="mr-2" />
+            Documentation
+          </Link>
+        </nav>
 
         {/* Auth Section */}
         <div className="flex items-center">
@@ -205,9 +197,7 @@ export function Nav() {
                   <p className="font-medium text-gray-900 dark:text-white">
                     {user.user_metadata?.full_name || "User"}
                   </p>
-                  <p className="text-sm text-gray-500 truncate">
-                    {user.email}
-                  </p>
+                  <p className="text-sm text-gray-500 truncate">{user.email}</p>
                 </div>
 
                 <DropdownMenuItem onClick={() => router.push("/dashboard")}>
