@@ -184,9 +184,10 @@ export function Nav() {
                       {user.user_metadata?.full_name?.charAt(0) || "U"}
                     </AvatarFallback>
                   </Avatar>
-                  <span className="ml-2 font-medium hidden lg:inline-block text-gray-700 dark:text-gray-200">
+                  {/* Removed the user's name from navbar */}
+                  {/* <span className="ml-2 font-medium hidden lg:inline-block text-gray-700 dark:text-gray-200">
                     {user.user_metadata?.full_name?.split(" ")[0] || "Account"}
-                  </span>
+                  </span> */}
                 </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent
