@@ -15,9 +15,9 @@ export function Footer({ className }: { className?: string }) {
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <div className="bg-white rounded-lg w-10 h-10 flex items-center justify-center">
-                <span className="font-bold text-neutral-900">B</span>
+                <span className="font-bold text-neutral-900">YA</span>
               </div>
-              <span className="font-bold text-xl">VIBE</span>
+              <span className="font-bold text-xl">YourApp</span>
             </div>
             <p className="text-neutral-400 max-w-xs">
               Simplify your workflow and boost productivity with our intuitive solutions.
@@ -72,7 +72,7 @@ export function Footer({ className }: { className?: string }) {
 
         <div className="pt-8 border-t border-neutral-800 flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="text-sm text-neutral-400">
-            © {new Date().getFullYear()} VIBE. All rights reserved.
+            © {new Date().getFullYear()} YourApp. All rights reserved.
           </div>
           <div className="flex flex-wrap justify-center gap-4 text-sm">
             <a href="#" className="hover:text-white transition">
