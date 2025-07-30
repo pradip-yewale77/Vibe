@@ -27,7 +27,6 @@ const Page: React.FC = () => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Auto-resize textarea
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
@@ -38,7 +37,6 @@ const Page: React.FC = () => {
     }
   }, [prompt]);
 
-  // Handle suggestions visibility
   useEffect(() => {
     setShowSuggestions(!prompt.trim() && !focused);
   }, [prompt, focused]);
@@ -47,21 +45,24 @@ const Page: React.FC = () => {
     e.preventDefault();
     const trimmed = prompt.trim();
     if (!trimmed) return;
-
     localStorage.setItem("prompt", trimmed);
     router.push(`/project`);
   };
 
   return (
     <>
-      <Nav />
-      <div 
+      {/* Navbar with higher z-index */}
+      <div className="relative z-50">
+        <Nav />
+      </div>
+
+      <div
         ref={containerRef}
-        className="min-h-screen py-10 w-screen flex items-center justify-center overflow-hidden relative
+        className="min-h-screen pt-[80px] w-full flex items-center justify-center overflow-hidden relative
           bg-[radial-gradient(ellipse_at_top_left,#18191c_60%,rgba(44,62,80,0.97)_100%),linear-gradient(to_bottom,#18191c_30%,#3a3e5e_60%,#2e026d_80%,#fc8181_95%,#fcbd7c_100%)]"
       >
-        {/* Animated particles */}
-        <div className="absolute inset-0 overflow-hidden">
+        {/* Animated background particles */}
+        <div className="absolute inset-0 overflow-hidden z-0 max-w-full">
           {[...Array(15)].map((_, i) => (
             <motion.div
               key={i}
@@ -86,6 +87,7 @@ const Page: React.FC = () => {
           ))}
         </div>
 
+        {/* Main content */}
         <div className="w-full max-w-2xl flex flex-col items-center px-4 z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -93,12 +95,12 @@ const Page: React.FC = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-center mb-8"
           >
-            <motion.div 
-              className="mx-auto mb-4 flex items-center justify-center bg-gradient-to-r from-blue-600 to-purple-600 w-16 h-16 rounded-full"
+            <motion.div
+              className="mx-auto mb-4 flex items-center justify-center bg-gradient-to-r from-blue-600 to-purple-600 w-16 h-16 rounded-full z-20"
               initial={{ scale: 0.8 }}
               animate={{ scale: 1, rotate: 360 }}
-              transition={{ 
-                delay: 0.4, 
+              transition={{
+                delay: 0.4,
                 duration: 1,
                 type: "spring",
                 stiffness: 260,
@@ -107,8 +109,8 @@ const Page: React.FC = () => {
             >
               <FaMagic className="text-white text-2xl" />
             </motion.div>
-            
-            <motion.h1 
+
+            <motion.h1
               className="text-white text-5xl md:text-6xl font-extrabold mb-3 tracking-tight drop-shadow-[0_2px_24px_rgba(44,62,80,0.10)]"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -116,8 +118,8 @@ const Page: React.FC = () => {
             >
               Build with <span className="bg-gradient-to-r from-blue-400 via-pink-400 to-orange-300 bg-clip-text text-transparent">Vibe</span>
             </motion.h1>
-            
-            <motion.h2 
+
+            <motion.h2
               className="text-gray-300 text-xl font-light text-center mb-8 leading-snug max-w-md"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -137,8 +139,8 @@ const Page: React.FC = () => {
                 onBlur={() => setFocused(false)}
                 placeholder="Describe what you want to create..."
                 className={`flex-1 resize-none bg-[#1e2026]/95 backdrop-blur-lg text-white border-none outline-none text-base py-5 pr-14 pl-5 rounded-2xl shadow-xl placeholder:text-gray-400 transition-all duration-300 ${
-                  focused 
-                    ? "ring-2 ring-pink-400 ring-offset-2 ring-offset-[#1e2026] shadow-[0_0_30px_rgba(236,72,153,0.3)]" 
+                  focused
+                    ? "ring-2 ring-pink-400 ring-offset-2 ring-offset-[#1e2026] shadow-[0_0_30px_rgba(236,72,153,0.3)]"
                     : "shadow-[0_0_15px_rgba(14,165,233,0.2)]"
                 }`}
               />
@@ -156,14 +158,14 @@ const Page: React.FC = () => {
 
           <AnimatePresence>
             {showSuggestions && (
-              <motion.div 
+              <motion.div
                 className="w-full mt-6"
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.3 }}
               >
-                <motion.div 
+                <motion.div
                   className="mb-3 text-sm text-gray-400 text-center font-medium tracking-wide"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -181,7 +183,7 @@ const Page: React.FC = () => {
                         textareaRef.current?.focus();
                       }}
                       className="bg-zinc-900/80 backdrop-blur-sm text-gray-200 px-4 py-3 rounded-xl hover:bg-gradient-to-r hover:from-blue-500/20 hover:to-pink-400/20 hover:text-white text-[0.95rem] font-medium transition-all shadow-sm border border-zinc-800 hover:border-blue-500/50 text-left"
-                      whileHover={{ 
+                      whileHover={{
                         y: -3,
                         boxShadow: "0 5px 15px rgba(59, 130, 246, 0.2)"
                       }}
