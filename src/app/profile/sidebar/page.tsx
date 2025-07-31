@@ -48,44 +48,56 @@ export default function ProfileSidebar() {
     }
   ];
 
-  const [open, setOpen] = useState(false);
+  // Sidebar is always open and cannot be toggled
+  const open = true;
+  const setOpen = () => {};
 
   return (
     <div
       className={cn(
-        "mx-auto min-h-screen flex w-full max-w-7xl flex-1 flex-col overflow-hidden rounded-md border border-neutral-200 bg-gray-100 md:flex-row dark:border-neutral-700 dark:bg-neutral-800"
+        "relative w-full h-screen flex flex-row bg-gradient-to-br from-[#232526] to-[#414345] overflow-hidden"
       )}
+      style={{ minHeight: '100vh', height: '100vh', paddingTop: '64px' }}
     >
-      <Sidebar open={open} setOpen={setOpen}>
-        <SidebarBody className="justify-between gap-10">
-          <div className="flex flex-1 flex-col overflow-x-hidden overflow-y-auto">
-            {open ? <Logo /> : <LogoIcon />}
-            <div className="mt-8 flex flex-col gap-2">
-              {links.map((link, idx) => (
-                <SidebarLink key={idx} link={link} />
-              ))}
+      {/* Sidebar */}
+      <div className="fixed top-[60px] left-0 h-[calc(100vh-64px)] w-72 z-30 flex flex-col bg-neutral-900 border-r border-neutral-800 shadow-lg select-none pointer-events-auto">
+        <Sidebar open={open} setOpen={setOpen}>
+          <SidebarBody className="flex flex-col justify-between h-full p-4 select-none">
+            <div className="flex flex-1 flex-col overflow-x-hidden overflow-y-auto pointer-events-none">
+              {/* Always show Logo, never toggle */}
+              <Logo />
+              <div className="mt-8 flex flex-col gap-2 pointer-events-auto">
+                {links.map((link, idx) => (
+                  <SidebarLink key={idx} link={link} />
+                ))}
+              </div>
             </div>
-          </div>
-          <div>
-            <SidebarLink
-              link={{
-                label: "Manu Arora",
-                href: "#",
-                icon: (
-                  <img
-                    src="https://assets.aceternity.com/manu.png"
-                    className="h-7 w-7 shrink-0 rounded-full"
-                    width={50}
-                    height={50}
-                    alt="Avatar"
-                  />
-                )
-              }}
-            />
-          </div>
-        </SidebarBody>
-      </Sidebar>
-      <Dashboard />
+            <div className="pointer-events-auto">
+              <SidebarLink
+                link={{
+                  label: "Manu Arora",
+                  href: "#",
+                  icon: (
+                    <img
+                      src="https://assets.aceternity.com/manu.png"
+                      className="h-7 w-7 shrink-0 rounded-full"
+                      width={50}
+                      height={50}
+                      alt="Avatar"
+                    />
+                  )
+                }}
+              />
+            </div>
+          </SidebarBody>
+        </Sidebar>
+      </div>
+      {/* Main Content */}
+      <main className="flex-1 flex items-center justify-center ml-72 h-[calc(100vh-64px)]">
+        <div className="w-full max-w-5xl h-[calc(100vh-96px)] bg-white/10 dark:bg-neutral-900/80 rounded-2xl shadow-2xl border border-neutral-700 p-8 md:p-16 backdrop-blur-md flex items-center justify-center">
+          <Dashboard />
+        </div>
+      </main>
     </div>
   );
 }
@@ -117,7 +129,6 @@ const LogoIcon = () => (
 
 const Dashboard = () => {
   const { user } = useAuth();
-
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -145,8 +156,9 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="flex flex-col md:flex-row w-full h-full p-4 md:p-10 gap-6 bg-white dark:bg-neutral-900 rounded-tl-2xl border border-neutral-200 dark:border-neutral-700">
-      <div className="w-full md:w-1/3 flex flex-col items-center justify-center gap-4 border-r border-neutral-200 dark:border-neutral-700 px-4">
+    <div className="flex flex-row w-full h-full gap-10 items-center justify-center">
+      {/* Profile Card */}
+      <div className="w-80 min-w-[320px] max-w-[320px] h-[calc(100vh-160px)] flex flex-col items-center justify-center gap-6 bg-gradient-to-b from-[#232526]/80 to-[#414345]/80 rounded-2xl shadow-lg border border-neutral-700 p-8">
         <Avatar className="w-28 h-28 ring ring-neutral-300 dark:ring-white ring-offset-2">
           <AvatarImage
             src={user?.user_metadata?.avatar_url}
@@ -155,8 +167,8 @@ const Dashboard = () => {
           <AvatarFallback>{formData.fullName?.charAt(0)}</AvatarFallback>
         </Avatar>
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-white mb-1">{formData.fullName}</h2>
-          <span className="text-sm text-neutral-400">{formData.email}</span>
+          <h2 className="text-2xl font-bold text-white mb-1 drop-shadow-lg">{formData.fullName}</h2>
+          <span className="text-sm text-neutral-300">{formData.email}</span>
         </div>
         <div className="flex flex-col items-start gap-2 w-full mt-4">
           <div className="flex items-center gap-2 text-neutral-300 text-sm">
@@ -192,35 +204,36 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className="flex-1 flex flex-col gap-6">
-        <h3 className="text-xl font-semibold text-white mb-2">Profile Information</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {/* Profile Form */}
+      <div className="flex-1 flex flex-col gap-3 bg-white/30 dark:bg-neutral-800/80 rounded-2xl shadow-lg border border-neutral-700 p-10 min-w-[420px] max-w-[900px] h-[calc(100vh-160px)] justify-center">
+        <h3 className="text-2xl font-bold text-white mb-4 drop-shadow-lg">Profile Information</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <Label className="text-white">Full Name</Label>
-            <Input type="text" value={formData.fullName} disabled className="mt-1" />
+            <Input type="text" value={formData.fullName} disabled className="mt-1 bg-white/60 dark:bg-neutral-900/60 text-black dark:text-white" />
           </div>
           <div>
             <Label className="text-white">Email</Label>
-            <Input type="email" value={formData.email} disabled className="mt-1" />
+            <Input type="email" value={formData.email} disabled className="mt-1 bg-white/60 dark:bg-neutral-900/60 text-black dark:text-white" />
           </div>
           <div>
             <Label className="text-white">Phone</Label>
-            <Input type="tel" value={formData.phone} disabled className="mt-1" />
+            <Input type="tel" value={formData.phone} disabled className="mt-1 bg-white/60 dark:bg-neutral-900/60 text-black dark:text-white" />
           </div>
           <div>
             <Label className="text-white">Location</Label>
-            <Input type="text" value={formData.location} disabled className="mt-1" />
+            <Input type="text" value={formData.location} disabled className="mt-1 bg-white/60 dark:bg-neutral-900/60 text-black dark:text-white" />
           </div>
         </div>
         <div>
           <Label className="text-white">Website</Label>
-          <Input type="text" value={formData.website} disabled className="mt-1" />
+          <Input type="text" value={formData.website} disabled className="mt-1 bg-white/60 dark:bg-neutral-900/60 text-black dark:text-white" />
         </div>
         <div>
           <Label className="text-white">Bio</Label>
-          <Textarea rows={4} value={formData.bio} disabled className="mt-1" />
+          <Textarea rows={4} value={formData.bio} disabled className="mt-1 bg-white/60 dark:bg-neutral-900/60 text-black dark:text-white" />
         </div>
-        <Button disabled variant="outline" className="w-fit cursor-not-allowed">
+        <Button disabled variant="outline" className="w-fit cursor-not-allowed bg-white/60 dark:bg-neutral-900/60 text-black dark:text-white border border-neutral-400 dark:border-neutral-700">
           GitHub Auth Connected
         </Button>
       </div>
