@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { Facebook, Twitter, Github, Linkedin, Mail, Instagram } from "lucide-react";
+import { Facebook, Twitter, Github, Linkedin, Instagram } from "lucide-react";
 
 export function Footer({ className }: { className?: string }) {
   return (
