@@ -6,6 +6,7 @@ import { Hero } from './components/Hero'
 import { FeaturesSection } from './features/page'
 import { Footer } from './components/Footer'
 import { FloatingDockDemo } from './components/FloatingDockDemo'
+import Pricing from './components/Pricing'
 
 const HomePage = () => {
   return (
@@ -33,6 +34,8 @@ const HomePage = () => {
         </section>
 
         {/* Features Section */}
+
+        <Pricing/>
        
       </main>
 

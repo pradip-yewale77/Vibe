@@ -2,7 +2,7 @@
 
 import React, { useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
-
+import type { HTMLAttributes } from "react";
 export function MovingBorderWrapper({
   children,
   borderRadius = "1.75rem",
@@ -18,8 +18,7 @@ export function MovingBorderWrapper({
   borderClassName?: string;
   containerClassName?: string;
   contentClassName?: string;
-  [key: string]: any;
-}) {
+} & HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       className={cn(
@@ -75,11 +74,11 @@ function MovingBorder({
 
     const animate = () => {
       position.current = (position.current + speed) % pathLength;
-      
+
       // Calculate position along rectangle perimeter
       let x = 0;
       let y = 0;
-      
+
       if (position.current < container.offsetWidth) {
         // Top edge
         x = position.current;
@@ -123,9 +122,9 @@ function MovingBorder({
       >
         {children}
       </div>
-      
+
       {/* Glow effect */}
-      <div 
+      <div
         className="absolute inset-0 overflow-hidden"
         style={{ borderRadius: `calc(${borderRadius} * 0.90)` }}
       >
