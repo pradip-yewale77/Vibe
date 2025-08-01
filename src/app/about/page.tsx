@@ -32,10 +32,10 @@ import { motion } from "framer-motion";
 const Page = () => {
   const teamMembers = [
     {
-      name: "Alex Johnson",
+      name: "Mr. Amit Shashikant Kasabe",
       role: "Founder & CEO",
-      bio: "10+ years in tech industry. Passionate about building products that solve real problems.",
-      avatar: "/avatars/alex.jpg",
+      bio: "A young software engineer with over 6 years of experience in verity of technologies such as MERN, PHP, AI&ML",
+      avatar: "/avatars/amit.jpg",
       socials: {
         instagram: "https://instagram.com",
         linkedin: "https://linkedin.com",
@@ -43,10 +43,10 @@ const Page = () => {
       },
     },
     {
-      name: "Sarah Williams",
-      role: "Lead Designer",
-      bio: "Design specialist with focus on user experience and accessibility principles.",
-      avatar: "/avatars/sarah.jpg",
+      name: "Ms. Sonal Shashikant Kasabe",
+      role: "CTO (Chief Technology Office)",
+      bio: "A young 23 years old dedicated software engineer who loves to design the technical solition to problmes business faces",
+      avatar: "/avatars/sonal.jpg",
       socials: {
         instagram: "https://instagram.com",
         linkedin: "https://linkedin.com",
@@ -54,21 +54,10 @@ const Page = () => {
       },
     },
     {
-      name: "Michael Chen",
-      role: "Engineering Lead",
-      bio: "Full-stack developer who enjoys creating elegant solutions to complex challenges.",
-      avatar: "/avatars/michael.jpg",
-      socials: {
-        instagram: "https://instagram.com",
-        linkedin: "https://linkedin.com",
-        facebook: "https://facebook.com",
-      },
-    },
-    {
-      name: "Priya Sharma",
-      role: "Marketing Director",
-      bio: "Growth hacker with expertise in digital marketing strategies and brand positioning.",
-      avatar: "/avatars/priya.jpg",
+      name: "Adrija Verma",
+      role: "Product Lead",
+      bio: "A young 24 years old Software Engineer who loves to design software products",
+      avatar: "/avatars/adrija.jpg",
       socials: {
         instagram: "https://instagram.com",
         linkedin: "https://linkedin.com",
@@ -104,7 +93,6 @@ const Page = () => {
     <>
       <Nav />
       <div className="relative min-h-screen bg-gradient-to-br from-neutral-900 to-black text-white overflow-hidden">
-        {/* Animated Background Particles */}
         <div className="absolute inset-0 z-0 pointer-events-none">
           {[...Array(20)].map((_, i) => {
             const top = Math.random() * 100;
@@ -135,9 +123,7 @@ const Page = () => {
           })}
         </div>
 
-        {/* Foreground Content */}
         <div className="relative z-10 py-12 px-4 sm:px-6 max-w-6xl mx-auto">
-          {/* Hero Section */}
           <div className="text-center mb-16 pt-32 md:pt-5">
             <Badge
               variant="outline"
@@ -155,7 +141,6 @@ const Page = () => {
             </p>
           </div>
 
-          {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
             {stats.map((stat, index) => (
               <Card
@@ -177,7 +162,6 @@ const Page = () => {
 
           <Separator className="my-16 bg-gray-700" />
 
-          {/* Mission Section */}
           <div className="mb-16">
             <div className="flex items-center mb-8">
               <div className="bg-blue-100 p-3 rounded-full mr-4">
@@ -221,48 +205,95 @@ const Page = () => {
               </div>
               <h2 className="text-3xl font-bold">Meet Our Team</h2>
             </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {teamMembers.map((member, index) => (
-                <Card
-                  key={index}
-                  className="bg-neutral-800 text-white group flex flex-col overflow-hidden transition-shadow hover:shadow-xl border border-white/10"
-                >
-                  <div className="relative h-60 overflow-hidden">
-                    <Avatar className="w-full h-full rounded-none">
-                      <AvatarImage
-                        src={member.avatar}
-                        alt={member.name}
-                        className="object-cover w-full h-full"
-                      />
-                      <AvatarFallback>{member.name[0]}</AvatarFallback>
-                    </Avatar>
-                  </div>
-                  <CardHeader className="px-6 pt-4 pb-2">
-                    <CardTitle className="text-xl text-white">{member.name}</CardTitle>
-                    <Badge className="w-fit bg-blue-600 text-white mt-1">
-                      {member.role}
-                    </Badge>
-                  </CardHeader>
-                  <CardContent className="px-6 pb-4 flex flex-col justify-between flex-grow">
-                    <p className="text-white/90 text-sm mb-4">{member.bio}</p>
-                    <div className="flex space-x-4 mt-auto">
-                      <a href={member.socials.instagram} target="_blank" rel="noopener noreferrer" className="text-pink-400 hover:text-pink-500">
-                        <InstagramIcon className="w-5 h-5" />
-                      </a>
-                      <a href={member.socials.linkedin} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-500">
-                        <LinkedinIcon className="w-5 h-5" />
-                      </a>
-                      <a href={member.socials.facebook} target="_blank" rel="noopener noreferrer" className="text-blue-300 hover:text-blue-400">
-                        <FacebookIcon className="w-5 h-5" />
-                      </a>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+
+            {/* Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* Card 1 - Amit */}
+              <Card className="bg-neutral-800 text-white group flex flex-col overflow-hidden transition-shadow hover:shadow-xl border border-white/10 h-[500px]">
+                <div className="relative h-64 w-full overflow-hidden">
+                  <Avatar className="w-full h-full rounded-none">
+                    <AvatarImage
+                      src="/avatars/amit.jpg"
+                      alt="Mr. Amit Shashikant Kasabe"
+                      className="object-cover w-full h-full"
+                    />
+                    <AvatarFallback>A</AvatarFallback>
+                  </Avatar>
+                </div>
+                <CardHeader className="px-6 pt-4 pb-2 text-center">
+                  <CardTitle className="text-xl text-white">
+                    Mr. Amit Shashikant Kasabe
+                  </CardTitle>
+                  <Badge className="w-fit bg-blue-600 text-white mt-1 mx-auto">
+                    Founder & CEO
+                  </Badge>
+                </CardHeader>
+                <CardContent className="px-6 pb-4 text-center">
+                  <p className="text-white/90 text-sm">
+                    A young software engineer with over 6 years of experience in
+                    variety of technologies such as MERN, PHP, AI & ML.
+                  </p>
+                </CardContent>
+              </Card>
+
+              {/* Card 2 - Sonal */}
+              <Card className="bg-neutral-800 text-white group flex flex-col overflow-hidden transition-shadow hover:shadow-xl border border-white/10 h-[500px]">
+                <div className="relative h-64 w-full overflow-hidden">
+                  <Avatar className="w-full h-full rounded-none">
+                    <AvatarImage
+                      src="/avatars/sonal.jpg"
+                      alt="Ms. Sonal Shashikant Kasabe"
+                      className="object-cover w-full h-full"
+                    />
+                    <AvatarFallback>S</AvatarFallback>
+                  </Avatar>
+                </div>
+                <CardHeader className="px-6 pt-4 pb-2 text-center">
+                  <CardTitle className="text-xl text-white">
+                    Ms. Sonal Shashikant Kasabe
+                  </CardTitle>
+                  <Badge className="w-fit bg-blue-600 text-white mt-1 mx-auto">
+                    CTO
+                  </Badge>
+                </CardHeader>
+                <CardContent className="px-6 pb-4 text-center">
+                  <p className="text-white/90 text-sm">
+                    A young 23-year-old dedicated software engineer who loves to
+                    design technical solutions to real-world business problems.
+                  </p>
+                </CardContent>
+              </Card>
+
+              {/* Card 3 - Adrija */}
+              <Card className="bg-neutral-800 text-white group flex flex-col overflow-hidden transition-shadow hover:shadow-xl border border-white/10 h-[500px]">
+                <div className="relative h-64 w-full overflow-hidden">
+                  <Avatar className="w-full h-full rounded-none">
+                    <AvatarImage
+                      src="/avatars/adrija.jpg"
+                      alt="Adrija Verma"
+                      className="object-cover w-full h-full"
+                    />
+                    <AvatarFallback>A</AvatarFallback>
+                  </Avatar>
+                </div>
+                <CardHeader className="px-6 pt-4 pb-2 text-center">
+                  <CardTitle className="text-xl text-white">
+                    Adrija Verma
+                  </CardTitle>
+                  <Badge className="w-fit bg-blue-600 text-white mt-1 mx-auto">
+                    Product Lead
+                  </Badge>
+                </CardHeader>
+                <CardContent className="px-6 pb-4 text-center">
+                  <p className="text-white/90 text-sm">
+                    A young 24-year-old Software Engineer who loves to build
+                    software products that make a difference.
+                  </p>
+                </CardContent>
+              </Card>
             </div>
           </div>
 
-          {/* Our Values */}
           <div className="mb-16">
             <div className="flex items-center mb-8">
               <div className="bg-blue-100 p-3 rounded-full mr-4">
@@ -318,7 +349,6 @@ const Page = () => {
             </div>
           </div>
 
-          {/* CTA Section */}
           <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl p-8 md:p-12 text-center text-white mb-16">
             <h2 className="text-2xl md:text-3xl font-bold mb-4">
               Join us on our journey
