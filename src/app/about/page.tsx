@@ -133,7 +133,7 @@ const Page = () => {
               Our Story
             </Badge>
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
-              We're on a mission to make the web better
+              We&rsquo;re on a mission to make the web better
             </h1>
             <p className="text-xl text-white max-w-3xl mx-auto font-medium">
               Creating tools that empower developers and designers to build
@@ -188,7 +188,7 @@ const Page = () => {
                 </CardHeader>
                 <CardContent>
                   <CardDescription className="text-lg text-gray-300">
-                    We're more than a product - we're a community of creators
+                    We&rsquo;re more than a product - we&rsquo;re a community of creators
                     supporting each other to push boundaries and innovate
                     together.
                   </CardDescription>
@@ -307,19 +307,19 @@ const Page = () => {
                   title: "Innovation",
                   text: "Constantly exploring new ideas and approaches to solve problems in novel ways.",
                   icon: <LightbulbIcon className="w-6 h-6 text-yellow-400" />,
-                  bg: "url('/demo-bg-1.jpg')",
+                  bg: "url(&rsquo;/demo-bg-1.jpg&rsquo;)",
                 },
                 {
                   title: "Integrity",
                   text: "Doing the right thing even when no one is watching. Honesty in all our interactions.",
                   icon: <ShieldCheckIcon className="w-6 h-6 text-green-500" />,
-                  bg: "url('/demo-bg-2.jpg')",
+                  bg: "url(&rsquo;/demo-bg-2.jpg&rsquo;)",
                 },
                 {
                   title: "Inclusivity",
                   text: "Building products and communities where everyone feels welcome and valued.",
                   icon: <UsersIcon className="w-6 h-6 text-pink-500" />,
-                  bg: "url('/demo-bg-3.jpg')",
+                  bg: "url(&rsquo;/demo-bg-3.jpg&rsquo;)",
                 },
               ].map((value, idx) => (
                 <div
@@ -354,7 +354,7 @@ const Page = () => {
               Join us on our journey
             </h2>
             <p className="max-w-2xl mx-auto mb-6 text-blue-100">
-              We're always looking for passionate individuals to join our team
+              We&rsquo;re always looking for passionate individuals to join our team
               or collaborate on exciting projects.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">

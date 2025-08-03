@@ -5,6 +5,7 @@ import { FaArrowUp, FaMagic } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { Nav } from "../components/Nav";
 import { Textarea } from "@/components/ui/textarea";
+import axios from "axios";
 
 const suggestions = [
   "Create a landing page for a fitness app",
@@ -41,13 +42,29 @@ const Page: React.FC = () => {
     setShowSuggestions(!prompt.trim() && !focused);
   }, [prompt, focused]);
 
-  const handleSend = (e: React.FormEvent) => {
+  const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
+
     const trimmed = prompt.trim();
     if (!trimmed) return;
-    localStorage.setItem("prompt", trimmed);
-    router.push(`/project`);
+
+    try {
+      const response = await axios.post("http://localhost:5000/simple-site", {
+        prompt: trimmed,
+      });
+
+      if (response.data.status === 1) {
+        router.push("/projects");
+      }
+
+      console.log("Server response:", response.data);
+    } catch (error) {
+      console.error("Failed to send request:", error);
+    }
   };
+
+
+
 
   return (
     <>
@@ -138,11 +155,10 @@ const Page: React.FC = () => {
                 onFocus={() => setFocused(true)}
                 onBlur={() => setFocused(false)}
                 placeholder="Describe what you want to create..."
-                className={`flex-1 resize-none bg-[#1e2026]/95 backdrop-blur-lg text-white border-none outline-none text-base py-5 pr-14 pl-5 rounded-2xl shadow-xl placeholder:text-gray-400 transition-all duration-300 ${
-                  focused
-                    ? "ring-2 ring-pink-400 ring-offset-2 ring-offset-[#1e2026] shadow-[0_0_30px_rgba(236,72,153,0.3)]"
-                    : "shadow-[0_0_15px_rgba(14,165,233,0.2)]"
-                }`}
+                className={`flex-1 resize-none bg-[#1e2026]/95 backdrop-blur-lg text-white border-none outline-none text-base py-5 pr-14 pl-5 rounded-2xl shadow-xl placeholder:text-gray-400 transition-all duration-300 ${focused
+                  ? "ring-2 ring-pink-400 ring-offset-2 ring-offset-[#1e2026] shadow-[0_0_30px_rgba(236,72,153,0.3)]"
+                  : "shadow-[0_0_15px_rgba(14,165,233,0.2)]"
+                  }`}
               />
               <motion.button
                 type="submit"

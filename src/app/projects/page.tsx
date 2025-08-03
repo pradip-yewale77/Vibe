@@ -1,157 +1,98 @@
-'use client';
+'use client'
 
-import React, { useEffect, useState } from 'react';
-import Header from '../components/Header';
-import CodeMirror from '@uiw/react-codemirror';
-import { html } from '@codemirror/lang-html';
-import { css } from '@codemirror/lang-css';
-import { javascript } from '@codemirror/lang-javascript';
-import { Extension } from '@codemirror/state';
-import Link from 'next/link';
-import axios from 'axios';
-import Loader from '@/components/Loader';
+import React, { useEffect, useState } from 'react'
+import { supabase } from '@/lib/supabaseClient'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { useRouter } from 'next/navigation'
+import { Badge } from '@/components/ui/badge'
+import { Skeleton } from '@/components/ui/skeleton'
 
-type FileKey = 'index.html' | 'style.css' | 'index.js';
-
-interface FileContent {
-  code: string;
-  language: Extension;
-}
-
-const BACKEND_URI = 'http://localhost:5000';
-
-const defaultFiles: Record<FileKey, FileContent> = {
-  'index.html': { language: html(), code: '' },
-  'style.css': { language: css(), code: '' },
-  'index.js': { language: javascript(), code: '' },
-};
-
-const Page: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<FileKey>('index.html');
-  const [fileData, setFileData] = useState<Record<FileKey, FileContent>>(defaultFiles);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [rawResponse, setRawResponse] = useState<string>('');
-  const [prompt, setPrompt] = useState<string>('');
+const Page = () => {
+  const router = useRouter()
+  const [projects, setProjects] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    const userPrompt = localStorage.getItem('prompt');
-    console.log(`prompt is ${userPrompt}`);
+    const fetchProjects = async () => {
+      const { data, error } = await supabase
+        .from('website_files')
+        .select('project_id, created_at')
+        .order('created_at', { ascending: false })
 
-    if (userPrompt) {
-      setPrompt(userPrompt);
-    } else {
-      setPrompt('Create a portfolio website using HTML, CSS, and JavaScript');
+      if (error) {
+        setError('Error fetching project list')
+        console.error(error)
+      } else {
+        // Filter unique projects by project_id
+        const unique = Array.from(
+          new Map(data.map(item => [item.project_id, item])).values()
+        )
+        setProjects(unique)
+      }
+
+      setLoading(false)
     }
-  }, []);
 
-  const handlewebsiteGeneration = async () => {
-    setLoading(true);
-    setRawResponse('Generating your website...');
+    fetchProjects()
+  }, [])
 
-    try {
-      const savedPrompt =
-        localStorage.getItem('prompt') ||
-        'Create a portfolio website using HTML, CSS, and JavaScript';
-
-      const response = await axios.post(`${BACKEND_URI}/generate-code`, {
-        prompt: savedPrompt,
-      });
-
-      const data = response.data;
-
-      console.log('Backend Response:', data);
-
-      const updatedFiles: Record<FileKey, FileContent> = {
-        'index.html': {
-          language: html(),
-          code: data['index.html'] || '',
-        },
-        'style.css': {
-          language: css(),
-          code: data['style.css'] || '',
-        },
-        'index.js': {
-          language: javascript(),
-          code: data['index.js'] || '',
-        },
-      };
-
-      setFileData(updatedFiles);
-
-      setRawResponse(
-        `HTML:\n${data['index.html']}\n\nCSS:\n${data['style.css']}\n\nJS:\n${data['index.js']}`
-      );
-    } catch (err) {
-      console.error('Failed to generate website:', err);
-      setRawResponse('⚠️ Error fetching generated code.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center">
-        <Loader />
-      </div>
-    );
+  const handleViewProject = (projectId: string) => {
+    router.push(`/vibe/${projectId}`)
   }
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      <Header />
-      <div className="container mx-auto md:grid grid-cols-12 gap-2 py-4">
-        <div className="col-span-3 w-full">
-          <Link href="/test" className="text-blue-400 underline block mb-4">
-            Preview
-          </Link>
-          <div className="w-full text-sm font-medium bg-gray-900 border border-gray-700 rounded-md">
-            {Object.keys(fileData).map((file) => (
-              <button
-                key={file}
-                onClick={() => setActiveTab(file as FileKey)}
-                className={`block w-full px-4 py-2 border-b border-gray-700 text-left ${
-                  activeTab === file ? 'bg-gray-800 text-white' : 'hover:bg-gray-700'
-                } focus:outline-none focus:ring-2 focus:ring-blue-500`}
-              >
-                {file}
-              </button>
+    <div className="bg-black min-h-screen p-8">
+      <div className="max-w-6xl mx-auto">
+        <h1 className="text-3xl font-bold text-white mb-6">All Projects</h1>
+
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[...Array(6)].map((_, i) => (
+              <Card key={i} className="bg-gray-900 border-gray-800">
+                <CardHeader>
+                  <Skeleton className="h-6 w-3/4 bg-gray-700 rounded" />
+                </CardHeader>
+                <CardContent>
+                  <Skeleton className="h-4 w-full bg-gray-700 rounded" />
+                  <Skeleton className="h-4 w-2/3 bg-gray-700 rounded mt-2" />
+                </CardContent>
+              </Card>
             ))}
           </div>
-        </div>
-
-        <div className="col-span-9">
-          <div className="p-2 bg-gray-900 border border-gray-700 rounded-lg mb-4">
-            <h2 className="text-lg font-bold text-white mb-2">🤖 AI Response</h2>
-            <pre className="text-sm text-green-300 whitespace-pre-wrap">{rawResponse}</pre>
+        ) : error ? (
+          <p className="text-red-400">{error}</p>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {projects.map(project => (
+              <Card
+                key={project.project_id}
+                className="bg-gray-900 border-gray-800 hover:border-blue-500/40"
+              >
+                <CardHeader>
+                  <CardTitle className="text-white">Project ID</CardTitle>
+                  <p className="text-gray-400 text-sm truncate">{project.project_id}</p>
+                </CardHeader>
+                <CardContent className="flex justify-between items-center">
+                  <Badge className="bg-blue-800/30 text-blue-300">
+                    {new Date(project.created_at).toLocaleDateString()}
+                  </Badge>
+                  <Button
+                    variant="outline"
+                    className="border-blue-600 text-blue-400 hover:bg-blue-900/20"
+                    onClick={() => handleViewProject(project.project_id)}
+                  >
+                    View Project
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
           </div>
-
-          <div className="p-2 bg-gray-900 border border-gray-700 rounded-lg">
-            <CodeMirror
-              value={fileData[activeTab].code}
-              height="400px"
-              theme="dark"
-              extensions={[fileData[activeTab].language]}
-              readOnly={false}
-              basicSetup={{
-                lineNumbers: true,
-                foldGutter: true,
-                highlightActiveLine: true,
-              }}
-            />
-          </div>
-          <div className="flex justify-center items-center py-4">
-            <button
-              onClick={handlewebsiteGeneration}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
-            >
-              🚀 Generate Website
-            </button>
-          </div>
-        </div>
+        )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Page;
+export default Page
