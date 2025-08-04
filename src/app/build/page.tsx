@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { FaArrowUp, FaMagic } from "react-icons/fa";
+import { FaArrowUp, FaMagic, FaCoffee } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { Nav } from "../components/Nav";
 import { Textarea } from "@/components/ui/textarea";
@@ -24,6 +24,7 @@ const Page: React.FC = () => {
   const [prompt, setPrompt] = useState("");
   const [focused, setFocused] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(true);
+  const [isLoading, setIsLoading] = useState(false); // New loading state
   const router = useRouter();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -49,6 +50,7 @@ const Page: React.FC = () => {
     if (!trimmed) return;
 
     try {
+      setIsLoading(true); // Start loading
       const response = await axios.post("http://localhost:5000/simple-site", {
         prompt: trimmed,
       });
@@ -60,11 +62,10 @@ const Page: React.FC = () => {
       console.log("Server response:", response.data);
     } catch (error) {
       console.error("Failed to send request:", error);
+    } finally {
+      setIsLoading(false); // Stop loading regardless of outcome
     }
   };
-
-
-
 
   return (
     <>
@@ -72,6 +73,93 @@ const Page: React.FC = () => {
       <div className="relative z-50">
         <Nav />
       </div>
+
+      {/* Loading Overlay */}
+      <AnimatePresence>
+        {isLoading && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/90 backdrop-blur-xl z-50 flex flex-col items-center justify-center"
+          >
+            <motion.div
+              initial={{ scale: 0.8, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              transition={{ 
+                type: "spring", 
+                stiffness: 300, 
+                damping: 20 
+              }}
+              className="text-center max-w-md px-6"
+            >
+              <motion.div
+                animate={{ 
+                  rotate: 360,
+                  scale: [1, 1.1, 1],
+                }}
+                transition={{ 
+                  duration: 2, 
+                  repeat: Infinity, 
+                  ease: "easeInOut" 
+                }}
+                className="mx-auto mb-8"
+              >
+                <div className="relative inline-block">
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 blur-xl rounded-full opacity-70 animate-pulse"></div>
+                  <div className="relative bg-gradient-to-r from-blue-600 to-purple-600 w-24 h-24 rounded-full flex items-center justify-center">
+                    <FaCoffee className="text-white text-3xl" />
+                  </div>
+                </div>
+              </motion.div>
+              
+              <motion.h2
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3 }}
+                className="text-white text-3xl font-bold mb-4"
+              >
+                Vibe is Vibing...
+              </motion.h2>
+              
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6 }}
+                className="text-gray-300 text-lg mb-8"
+              >
+                Grab a cup of coffee, we're creating your project.<br />
+                You'll get it in a few minutes.
+              </motion.p>
+              
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.9 }}
+                className="flex justify-center"
+              >
+                <div className="flex space-x-2">
+                  {[...Array(3)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      className="w-3 h-3 rounded-full bg-blue-500"
+                      animate={{
+                        y: [0, -15, 0],
+                        opacity: [1, 0.5, 1]
+                      }}
+                      transition={{
+                        duration: 1.5,
+                        repeat: Infinity,
+                        delay: i * 0.2
+                      }}
+                    />
+                  ))}
+                </div>
+              </motion.div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <div
         ref={containerRef}
@@ -166,6 +254,7 @@ const Page: React.FC = () => {
                 aria-label="Send"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                disabled={isLoading} // Disable during loading
               >
                 <FaArrowUp className="text-white text-lg" />
               </motion.button>
