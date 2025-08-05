@@ -6,6 +6,8 @@ import dynamic from 'next/dynamic'
 import JSZip from 'jszip'
 import { saveAs } from 'file-saver'
 import { CopyIcon, DownloadIcon } from 'lucide-react'
+import Link from 'next/link'
+import { Monaco } from '@monaco-editor/react'
 
 // Dynamically import Monaco Editor to avoid SSR issues
 const MonacoEditor = dynamic(
@@ -13,14 +15,22 @@ const MonacoEditor = dynamic(
   { ssr: false, loading: () => <div className="h-full bg-gray-900 flex items-center justify-center">Loading editor...</div> }
 )
 
+interface FileData {
+  id: string;
+  filename: string;
+  content: string;
+  created_at: string;
+  project_id: string;
+}
+
 const Page = () => {
   const params = useParams()
   const projectId = params.id as string
-  const editorRef = useRef<any>(null)
+  const editorRef = useRef<Monaco>(null)
   
-  const [files, setFiles] = useState<any[]>([])
-  const [selectedHtml, setSelectedHtml] = useState<any | null>(null)
-  const [selectedFile, setSelectedFile] = useState<any | null>(null)
+  const [files, setFiles] = useState<FileData[]>([])
+  const [selectedHtml, setSelectedHtml] = useState<FileData | null>(null)
+  const [selectedFile, setSelectedFile] = useState<FileData | null>(null)
   const [previewHtml, setPreviewHtml] = useState<string>('')
   const [viewMode, setViewMode] = useState<'preview' | 'source'>('preview')
   const [loading, setLoading] = useState<boolean>(true)
@@ -66,9 +76,9 @@ const Page = () => {
           setSelectedHtml(htmlFile)
           setSelectedFile(htmlFile)
         }
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error('Error fetching files:', err)
-        setError(`Error loading project: ${err.message}`)
+        setError(`Error loading project: ${(err as Error).message}`)
       } finally {
         setLoading(false)
       }
@@ -97,7 +107,7 @@ const Page = () => {
     setPreviewHtml(html)
   }, [selectedHtml, files])
 
-  const handleEditorDidMount = (editor: any) => {
+  const handleEditorDidMount = (editor: Monaco) => {
     editorRef.current = editor
   }
 
@@ -150,15 +160,20 @@ const Page = () => {
           </div>
           <h2 className="text-2xl font-bold text-white mb-2">Project Not Found</h2>
           <p className="text-gray-400 mb-6">{error}</p>
-          <a 
-            href="/" 
-            className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-md transition-colors text-white"
+          <Link
+            href="/"
+            passHref
+            legacyBehavior
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clipRule="evenodd" />
-            </svg>
-            Go Back to Projects
-          </a>
+            <a
+              className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-md transition-colors text-white"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clipRule="evenodd" />
+              </svg>
+              Go Back to Projects
+            </a>
+          </Link>
         </div>
       </div>
     )

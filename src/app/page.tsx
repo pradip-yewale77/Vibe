@@ -3,7 +3,7 @@
 import React from 'react'
 import { Nav } from './components/Nav'
 import { Hero } from './components/Hero'
-import { FeaturesSection } from './features/page'
+
 import { Footer } from './components/Footer'
 import { FloatingDockDemo } from './components/FloatingDockDemo'
 import Pricing from './components/Pricing'

@@ -85,9 +85,6 @@ export const DesktopSidebar = ({
   ...props
 }: React.ComponentProps<typeof motion.div>) => {
   const { open, setOpen, animate } = useSidebar();
-  const { user } = useAuth();
-
-  console.log(`from sidebar the user is`);
   
   return (
     <>
