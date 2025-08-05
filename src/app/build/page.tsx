@@ -128,8 +128,8 @@ const Page: React.FC = () => {
                 transition={{ delay: 0.6 }}
                 className="text-gray-300 text-lg mb-8"
               >
-                Grab a cup of coffee, we're creating your project.<br />
-                You'll get it in a few minutes.
+                Grab a cup of coffee, we&apos;re creating your project.<br />
+                You&apos;ll get it in a few minutes.
               </motion.p>
               
               <motion.div

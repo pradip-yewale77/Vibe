@@ -112,7 +112,7 @@ function MovingBorder({
       className="absolute inset-0"
       style={{
         borderRadius: `calc(${borderRadius} * 0.90)`,
-        // @ts-ignore
+        // @ts-expect-error
         "--x": "0px",
         "--y": "0px",
       }}

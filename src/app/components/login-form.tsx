@@ -16,12 +16,24 @@ interface LoginFormProps extends React.ComponentProps<"div"> {}
 
 export function LoginForm({ className, ...props }: LoginFormProps) {
   useEffect(() => {
-  if (typeof window !== "undefined" && window.location.hash) {
-    const cleanUrl = new URL(window.location.href)
-    cleanUrl.hash = ""
-    window.history.replaceState(null, "", cleanUrl.toString())
+    if (window.location.hash) {
+      window.history.replaceState(null, '', window.location.pathname + window.location.search)
+    }
+  }, [])
+
+  const signInWithProvider = (provider: "google" | "github") => {
+    supabase.auth.signInWithOAuth({
+      provider,
+      options: {
+        redirectTo: `${window.location.origin}`,
+        queryParams: {
+          response_type: "code",
+        },
+      },
+    }).catch((err) => {
+      console.error(`Error signing in with ${provider}:`, err.message)
+    })
   }
-}, [])
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -52,19 +64,5 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
       </Card>
     </div>
   )
-}
-
-function signInWithProvider(provider: "google" | "github") {
-  supabase.auth.signInWithOAuth({
-    provider,
-    options: {
-      redirectTo: `${location.origin}`, // Or any route like `${location.origin}/dashboard`
-      queryParams: {
-        response_type: "code", // Enable PKCE flow to avoid token in URL
-      },
-    },
-  }).catch((err) => {
-    console.error(`Error signing in with ${provider}:`, err.message)
-  })
 }
 

@@ -1,19 +1,11 @@
 import type { Metadata } from "next"
-import { Geist, Geist_Mono, Outfit , Poppins } from "next/font/google"
+import { Geist, Geist_Mono, Outfit } from "next/font/google"
 import "./globals.css"
 import { AuthProvider } from "@/Context/AuthProvider"
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 })
-
-
-const poppins = Poppins({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'], // choose weights you use
-  variable: '--font-poppins',          // optional for CSS variable usage
-  display: 'swap',
-});
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
