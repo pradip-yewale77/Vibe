@@ -151,13 +151,22 @@ app.listen(port, () => {
 
 // No PageProps import needed
 
-export default function WebsitePage(props: any) {
+type WebsitePageProps = {
+  params?: { id?: string } | Promise<{ id?: string }>;
+};
+
+export default function WebsitePage(props: WebsitePageProps) {
   // Support both direct and Promise params (for Next.js compatibility)
   const [id, setId] = React.useState<string | undefined>(undefined);
   React.useEffect(() => {
     const resolveParams = async () => {
-      const params = typeof props.params?.then === 'function' ? await props.params : props.params;
-      setId(params?.id);
+      let paramsObj: { id?: string } | undefined;
+      if (props.params && typeof (props.params as Promise<unknown>).then === 'function') {
+        paramsObj = await props.params as { id?: string };
+      } else {
+        paramsObj = props.params as { id?: string };
+      }
+      setId(paramsObj?.id);
     };
     resolveParams();
   }, [props.params]);
@@ -270,32 +279,37 @@ export default function WebsitePage(props: any) {
       if (
         typeof item === 'object' &&
         item !== null &&
-        'type' in item &&
-        (item as any).type === 'folder'
+        'type' in item
       ) {
-        const folder = item as { name: string; type: 'folder'; isOpen?: boolean; children?: unknown[] };
-        return {
-          name: folder.name,
-          type: 'folder',
-          isOpen: folder.isOpen || false,
-          children: folder.children ? folder.children.map(convertItem) : []
-        };
-      } else if (
-        typeof item === 'object' &&
-        item !== null &&
-        'type' in item &&
-        (item as any).type === 'file'
-      ) {
-        const file = item as { name: string; type: 'file'; content?: string; language?: string };
-        return {
-          name: file.name,
-          type: 'file',
-          content: file.content || '',
-          language: file.language || getLanguage(file.name)
-        };
-      } else {
-        throw new Error("Invalid item type in API response");
+        if ((item as { type: string }).type === 'folder') {
+          const folder = item as {
+            name: string;
+            type: 'folder';
+            isOpen?: boolean;
+            children?: unknown[];
+          };
+          return {
+            name: folder.name,
+            type: 'folder',
+            isOpen: folder.isOpen || false,
+            children: folder.children ? folder.children.map(convertItem) : []
+          };
+        } else if ((item as { type: string }).type === 'file') {
+          const file = item as {
+            name: string;
+            type: 'file';
+            content?: string;
+            language?: string;
+          };
+          return {
+            name: file.name,
+            type: 'file',
+            content: file.content || '',
+            language: file.language || getLanguage(file.name)
+          };
+        }
       }
+      throw new Error("Invalid item type in API response");
     };
 
     // Convert the root folder and its children
