@@ -147,8 +147,10 @@ app.listen(port, () => {
   }
 ];
 
-export default function WebsitePage({ params }: { params: { id: string } }) {
-  const { id } = params;
+import type { PageProps } from '../../../../.next/types/app/websites/[id]/page';
+
+export default async function WebsitePage({ params }: PageProps) {
+  const { id } = params ? await params : {};
   const [fileStructure, setFileStructure] = useState<FileStructureItem[]>(initialFileStructure);
   const [openTabs, setOpenTabs] = useState<FileItem[]>([]);
   const [activeTab, setActiveTab] = useState<string | null>(null);
