@@ -266,22 +266,35 @@ export default function WebsitePage(props: any) {
     };
 
     // Recursive function to convert backend items to frontend structure
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const convertItem = (item: any): FileStructureItem => {
-      if (item.type === 'folder') {
+    const convertItem = (item: unknown): FileStructureItem => {
+      if (
+        typeof item === 'object' &&
+        item !== null &&
+        'type' in item &&
+        (item as any).type === 'folder'
+      ) {
+        const folder = item as { name: string; type: 'folder'; isOpen?: boolean; children?: unknown[] };
         return {
-          name: item.name,
+          name: folder.name,
           type: 'folder',
-          isOpen: item.isOpen || false,
-          children: item.children ? item.children.map(convertItem) : []
+          isOpen: folder.isOpen || false,
+          children: folder.children ? folder.children.map(convertItem) : []
+        };
+      } else if (
+        typeof item === 'object' &&
+        item !== null &&
+        'type' in item &&
+        (item as any).type === 'file'
+      ) {
+        const file = item as { name: string; type: 'file'; content?: string; language?: string };
+        return {
+          name: file.name,
+          type: 'file',
+          content: file.content || '',
+          language: file.language || getLanguage(file.name)
         };
       } else {
-        return {
-          name: item.name,
-          type: 'file',
-          content: item.content || '',
-          language: item.language || getLanguage(item.name)
-        };
+        throw new Error("Invalid item type in API response");
       }
     };
 
