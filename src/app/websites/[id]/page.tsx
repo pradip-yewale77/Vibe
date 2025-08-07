@@ -9,7 +9,6 @@ import Editor from '@monaco-editor/react'
 import axios from 'axios';
 // import PreviewPane from '@/app/components/PreviewPane';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 
 // Define types
 type FileItem = {
@@ -227,7 +226,7 @@ export default function WebsitePage({ params }: { params: { id: string } }) {
     setFileStructure(prev => updateStructure(prev, path));
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // ...existing code...
   const convertApiResponseToFileStructure = (apiResponse: unknown): FileStructureItem[] => {
     // The API response is an array containing a single root folder object
     if (!Array.isArray(apiResponse)) {

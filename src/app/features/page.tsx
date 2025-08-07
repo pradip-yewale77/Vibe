@@ -8,7 +8,7 @@ import { motion } from "motion/react";
 import { IconBrandYoutubeFilled } from "@tabler/icons-react";
 
 
-export function FeaturesSection() {
+function FeaturesSection() {
   const features = [
     {
       title: "Track issues effectively",
