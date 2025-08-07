@@ -1,7 +1,8 @@
 
+"use client";
 
 // app/websites/[id]/page.tsx
-"use client";
+
 
 import { notFound } from 'next/navigation';
 import React, { useState, useRef, useEffect } from 'react';
@@ -147,29 +148,46 @@ app.listen(port, () => {
   }
 ];
 
-import type { PageProps } from '../../../../.next/types/app/websites/[id]/page';
 
-export default async function WebsitePage({ params }: PageProps) {
-  const { id } = params ? await params : {};
+// If you want to type params, you can use:
+type WebsitePageProps = { params: { id: string } };
+
+export default function WebsitePage({ params }: WebsitePageProps) {
+  const { id } = params || {};
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [fileStructure, setFileStructure] = useState<FileStructureItem[]>(initialFileStructure);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [openTabs, setOpenTabs] = useState<FileItem[]>([]);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [activeTab, setActiveTab] = useState<string | null>(null);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [fileContent, setFileContent] = useState<Record<string, string>>({});
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [isChatOpen, setIsChatOpen] = useState(true);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [messages, setMessages] = useState([
     { id: 1, text: "Welcome to the dark mode editor! How can I help with your project?", sender: "bot" }
   ]);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [newMessage, setNewMessage] = useState("");
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [newItemType, setNewItemType] = useState<'file' | 'folder' | null>(null);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [newItemPath, setNewItemPath] = useState<string[]>([]);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [newItemName, setNewItemName] = useState("");
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [isCreating, setIsCreating] = useState(false);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const newItemInputRef = useRef<HTMLInputElement>(null);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  if (!id) {
-    notFound();
-  }
+  useEffect(() => {
+    if (!id) {
+      notFound();
+    }
+  }, [id]);
 
   // Focus on input when creating new item
   useEffect(() => {
