@@ -20,7 +20,6 @@ import {
   MailIcon,
   CalendarIcon,
   MapPinIcon,
-  InstagramIcon,
   LinkedinIcon,
   FacebookIcon,
   ShieldCheckIcon,

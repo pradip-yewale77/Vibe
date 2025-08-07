@@ -1,17 +1,11 @@
 import React from "react";
 import { FloatingDock } from "./UI/floating-dock";
 import {
-  IconBrandGithub,
-  IconBrandX,
-  IconExchange,
-  IconHome,
-  IconNewSection,
-  IconTerminal2,
+  import {
   IconHtml,
   IconBrandTypescript,
   IconBrandCss3,
   IconBrandVscode
-
 } from "@tabler/icons-react";
 
 export function FloatingDockDemo() {
