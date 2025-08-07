@@ -26,12 +26,12 @@ const FooterColumn = ({ title, links }: { title: string; links: { label: string;
   </div>
 );
 
-const Footer = ({ className }: { className?: string }) => {
+
+export default function FooterPage() {
   return (
     <footer
       className={cn(
-        "bg-neutral-900 text-neutral-300 py-12 px-4 w-full border-t border-neutral-800",
-        className
+        "bg-neutral-900 text-neutral-300 py-12 px-4 w-full border-t border-neutral-800"
       )}
     >
       <div className="max-w-6xl mx-auto">
@@ -103,6 +103,4 @@ const Footer = ({ className }: { className?: string }) => {
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}
