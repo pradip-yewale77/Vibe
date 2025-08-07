@@ -20,8 +20,8 @@ import {
   MailIcon,
   CalendarIcon,
   MapPinIcon,
-  LinkedinIcon,
-  FacebookIcon,
+  // LinkedinIcon,
+  // FacebookIcon,
   ShieldCheckIcon,
 } from "lucide-react";
 import { Footer } from "../components/Footer";
@@ -64,7 +64,41 @@ const Page = () => {
       },
     },
   ];
-
+  // const teamMembers = [
+  //   {
+  //     name: "Mr. Amit Shashikant Kasabe",
+  //     role: "Founder & CEO",
+  //     bio: "A young software engineer with over 6 years of experience in verity of technologies such as MERN, PHP, AI&ML",
+  //     avatar: "/avatars/amit.jpg",
+  //     socials: {
+  //       instagram: "https://instagram.com",
+  //       linkedin: "https://linkedin.com",
+  //       facebook: "https://facebook.com",
+  //     },
+  //   },
+  //   {
+  //     name: "Ms. Sonal Shashikant Kasabe",
+  //     role: "CTO (Chief Technology Office)",
+  //     bio: "A young 23 years old dedicated software engineer who loves to design the technical solition to problmes business faces",
+  //     avatar: "/avatars/sonal.jpg",
+  //     socials: {
+  //       instagram: "https://instagram.com",
+  //       linkedin: "https://linkedin.com",
+  //       facebook: "https://facebook.com",
+  //     },
+  //   },
+  //   {
+  //     name: "Adrija Verma",
+  //     role: "Product Lead",
+  //     bio: "A young 24 years old Software Engineer who loves to design software products",
+  //     avatar: "/avatars/adrija.jpg",
+  //     socials: {
+  //       instagram: "https://instagram.com",
+  //       linkedin: "https://linkedin.com",
+  //       facebook: "https://facebook.com",
+  //     },
+  //   },
+  // ];
   const stats = [
     {
       value: "2018",

@@ -7,7 +7,9 @@ import { notFound } from 'next/navigation';
 import React, { useState, useRef, useEffect } from 'react';
 import Editor, { OnChange, OnMount } from '@monaco-editor/react'
 import axios from 'axios';
-import PreviewPane from '@/app/components/PreviewPane';
+// import PreviewPane from '@/app/components/PreviewPane';
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 
 // Define types
 type FileItem = {
@@ -163,16 +165,19 @@ export default function WebsitePage({ params }: { params: { id: string } }) {
   const [isCreating, setIsCreating] = useState(false);
   const newItemInputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const editorRef = useRef<any>(null)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const editorRef = useRef<unknown>(null)
 
-  const handleEditorDidMount: OnMount = (editor, monaco) => {
-    editorRef.current = editor
-    console.log('Editor mounted')
-  }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // const handleEditorDidMount: OnMount = (editor: unknown, monaco: unknown) => {
+  //   editorRef.current = editor
+  //   console.log('Editor mounted')
+  // }
 
-  const handleChange: OnChange = (value, event) => {
-    console.log('Content changed:', value)
-  }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // const handleChange: OnChange = (value: string, event: unknown) => {
+  //   console.log('Content changed:', value)
+  // }
 
   if (!id) {
     notFound();
@@ -235,7 +240,8 @@ export default function WebsitePage({ params }: { params: { id: string } }) {
     setFileStructure(prev => updateStructure(prev, path));
   };
 
-  const convertApiResponseToFileStructure = (apiResponse: any): FileStructureItem[] => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const convertApiResponseToFileStructure = (apiResponse: unknown): FileStructureItem[] => {
     // The API response is an array containing a single root folder object
     if (!Array.isArray(apiResponse)) {
       console.error("Invalid API response format. Expected an array.");
@@ -259,6 +265,7 @@ export default function WebsitePage({ params }: { params: { id: string } }) {
     };
 
     // Recursive function to convert backend items to frontend structure
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const convertItem = (item: any): FileStructureItem => {
       if (item.type === 'folder') {
         return {

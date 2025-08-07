@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { RefreshCw, ExternalLink, ChevronLeft, GitBranch, Crown, Upload, Home } from 'lucide-react';
+import { ExternalLink, ChevronLeft, GitBranch, Crown, Upload, Home } from 'lucide-react';
 import Link from 'next/link';
 const Header = () => {
   return (

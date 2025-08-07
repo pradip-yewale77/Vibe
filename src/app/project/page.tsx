@@ -6,7 +6,7 @@ import Sidebar from './components/Sidebar';
 import Header from '../components/Header';
 import axios from 'axios';
 const Page = () => {
-  const [files, setFiles] = useState([
+  const [files, /* setFiles */] = useState([
     { name: 'index.html', content: '<h1>Hello</h1>' },
     { name: 'styles.css', content: 'body { background: black; }' },
     { name: 'script.js', content: 'console.log("Hello");' },
