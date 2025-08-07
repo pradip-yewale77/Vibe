@@ -149,11 +149,18 @@ app.listen(port, () => {
 ];
 
 
-// If you want to type params, you can use:
-type WebsitePageProps = { params: { id: string } };
+// No PageProps import needed
 
-export default function WebsitePage({ params }: WebsitePageProps) {
-  const { id } = params || {};
+export default function WebsitePage(props: any) {
+  // Support both direct and Promise params (for Next.js compatibility)
+  const [id, setId] = React.useState<string | undefined>(undefined);
+  React.useEffect(() => {
+    const resolveParams = async () => {
+      const params = typeof props.params?.then === 'function' ? await props.params : props.params;
+      setId(params?.id);
+    };
+    resolveParams();
+  }, [props.params]);
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [fileStructure, setFileStructure] = useState<FileStructureItem[]>(initialFileStructure);
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -184,6 +191,7 @@ export default function WebsitePage({ params }: WebsitePageProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (id === undefined) return;
     if (!id) {
       notFound();
     }
@@ -706,7 +714,7 @@ export default function WebsitePage({ params }: WebsitePageProps) {
         <div className="flex justify-between items-center mb-6">
           <div>
             <h1 className="text-2xl font-bold text-white">Dark Mode Editor</h1>
-            <p className="text-gray-400">Editing: Website ID {id}</p>
+            <p className="text-gray-400">Editing: Website ID {id ?? ''}</p>
           </div>
           <div className="flex items-center space-x-3">
             <button className="px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-700 text-white rounded-lg hover:opacity-90 transition-opacity flex items-center">
@@ -889,7 +897,7 @@ export default function WebsitePage({ params }: WebsitePageProps) {
                 {activeTab ? `Editing: ${activeTab}` : 'Ready'}
               </div>
               <div>
-                Website ID: {id}
+                Website ID: {id ?? ''}
               </div>
             </div>
           </div>
