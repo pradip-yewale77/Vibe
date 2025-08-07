@@ -12,7 +12,7 @@ import {
 import { supabase } from "@/lib/supabaseClient"
 import { useEffect } from "react"
 
-interface LoginFormProps extends React.ComponentProps<"div"> {}
+type LoginFormProps = React.ComponentProps<"div">;
 
 export function LoginForm({ className, ...props }: LoginFormProps) {
   useEffect(() => {

@@ -1,7 +1,6 @@
 import React from "react";
 import { FloatingDock } from "./UI/floating-dock";
 import {
-  import {
   IconHtml,
   IconBrandTypescript,
   IconBrandCss3,
