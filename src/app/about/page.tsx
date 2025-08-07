@@ -241,89 +241,34 @@ const Page = () => {
 
             {/* Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {/* Card 1 - Amit */}
-              <Card className="bg-neutral-800 text-white group flex flex-col overflow-hidden transition-shadow hover:shadow-xl border border-white/10 h-[500px]">
-                <div className="relative h-64 w-full overflow-hidden">
-                  <Avatar className="w-full h-full rounded-none">
-                    <AvatarImage
-                      src="/avatars/amit.jpg"
-                      alt="Mr. Amit Shashikant Kasabe"
-                      className="object-cover w-full h-full"
-                    />
-                    <AvatarFallback>A</AvatarFallback>
-                  </Avatar>
-                </div>
-                <CardHeader className="px-6 pt-4 pb-2 text-center">
-                  <CardTitle className="text-xl text-white">
-                    Mr. Amit Shashikant Kasabe
-                  </CardTitle>
-                  <Badge className="w-fit bg-blue-600 text-white mt-1 mx-auto">
-                    Founder & CEO
-                  </Badge>
-                </CardHeader>
-                <CardContent className="px-6 pb-4 text-center">
-                  <p className="text-white/90 text-sm">
-                    A young software engineer with over 6 years of experience in
-                    variety of technologies such as MERN, PHP, AI & ML.
-                  </p>
-                </CardContent>
-              </Card>
-
-              {/* Card 2 - Sonal */}
-              <Card className="bg-neutral-800 text-white group flex flex-col overflow-hidden transition-shadow hover:shadow-xl border border-white/10 h-[500px]">
-                <div className="relative h-64 w-full overflow-hidden">
-                  <Avatar className="w-full h-full rounded-none">
-                    <AvatarImage
-                      src="/avatars/sonal.jpg"
-                      alt="Ms. Sonal Shashikant Kasabe"
-                      className="object-cover w-full h-full"
-                    />
-                    <AvatarFallback>S</AvatarFallback>
-                  </Avatar>
-                </div>
-                <CardHeader className="px-6 pt-4 pb-2 text-center">
-                  <CardTitle className="text-xl text-white">
-                    Ms. Sonal Shashikant Kasabe
-                  </CardTitle>
-                  <Badge className="w-fit bg-blue-600 text-white mt-1 mx-auto">
-                    CTO
-                  </Badge>
-                </CardHeader>
-                <CardContent className="px-6 pb-4 text-center">
-                  <p className="text-white/90 text-sm">
-                    A young 23-year-old dedicated software engineer who loves to
-                    design technical solutions to real-world business problems.
-                  </p>
-                </CardContent>
-              </Card>
-
-              {/* Card 3 - Adrija */}
-              <Card className="bg-neutral-800 text-white group flex flex-col overflow-hidden transition-shadow hover:shadow-xl border border-white/10 h-[500px]">
-                <div className="relative h-64 w-full overflow-hidden">
-                  <Avatar className="w-full h-full rounded-none">
-                    <AvatarImage
-                      src="/avatars/adrija.jpg"
-                      alt="Adrija Verma"
-                      className="object-cover w-full h-full"
-                    />
-                    <AvatarFallback>A</AvatarFallback>
-                  </Avatar>
-                </div>
-                <CardHeader className="px-6 pt-4 pb-2 text-center">
-                  <CardTitle className="text-xl text-white">
-                    Adrija Verma
-                  </CardTitle>
-                  <Badge className="w-fit bg-blue-600 text-white mt-1 mx-auto">
-                    Product Lead
-                  </Badge>
-                </CardHeader>
-                <CardContent className="px-6 pb-4 text-center">
-                  <p className="text-white/90 text-sm">
-                    A young 24-year-old Software Engineer who loves to build
-                    software products that make a difference.
-                  </p>
-                </CardContent>
-              </Card>
+              {teamMembers.map((member, idx) => (
+                <Card
+                  key={idx}
+                  className="bg-neutral-800 text-white group flex flex-col overflow-hidden transition-shadow hover:shadow-xl border border-white/10 h-[500px]"
+                >
+                  <div className="relative h-64 w-full overflow-hidden">
+                    <Avatar className="w-full h-full rounded-none">
+                      <AvatarImage
+                        src={member.avatar}
+                        alt={member.name}
+                        className="object-cover w-full h-full"
+                      />
+                      <AvatarFallback>{member.name[0]}</AvatarFallback>
+                    </Avatar>
+                  </div>
+                  <CardHeader className="px-6 pt-4 pb-2 text-center">
+                    <CardTitle className="text-xl text-white">
+                      {member.name}
+                    </CardTitle>
+                    <Badge className="w-fit bg-blue-600 text-white mt-1 mx-auto">
+                      {member.role}
+                    </Badge>
+                  </CardHeader>
+                  <CardContent className="px-6 pb-4 text-center">
+                    <p className="text-white/90 text-sm">{member.bio}</p>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
           </div>
 

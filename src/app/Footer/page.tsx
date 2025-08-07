@@ -1,7 +1,32 @@
+
 import { cn } from "@/lib/utils";
 import { Facebook, Twitter, Github, Linkedin, Instagram } from "lucide-react";
 
-export function Footer({ className }: { className?: string }) {
+
+const socialLinks = [
+  { icon: Github, href: "https://github.com/", label: "GitHub" },
+  { icon: Twitter, href: "https://twitter.com/", label: "Twitter" },
+  { icon: Facebook, href: "https://facebook.com/", label: "Facebook" },
+  { icon: Linkedin, href: "https://linkedin.com/", label: "LinkedIn" },
+  { icon: Instagram, href: "https://instagram.com/", label: "Instagram" },
+];
+
+const FooterColumn = ({ title, links }: { title: string; links: { label: string; href: string }[] }) => (
+  <div className="space-y-4">
+    <h3 className="font-semibold text-white text-lg">{title}</h3>
+    <ul className="space-y-3">
+      {links.map((link, index) => (
+        <li key={index}>
+          <a href={link.href} className="hover:text-white transition">
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+);
+
+const Footer = ({ className }: { className?: string }) => {
   return (
     <footer
       className={cn(
@@ -11,7 +36,6 @@ export function Footer({ className }: { className?: string }) {
     >
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
-          {/* Brand column */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <div className="bg-white rounded-lg w-10 h-10 flex items-center justify-center">
@@ -37,8 +61,6 @@ export function Footer({ className }: { className?: string }) {
               ))}
             </div>
           </div>
-
-          {/* Links columns */}
           <FooterColumn 
             title="Product" 
             links={[
@@ -48,7 +70,6 @@ export function Footer({ className }: { className?: string }) {
               { label: "Roadmap", href: "#" },
             ]}
           />
-          
           <FooterColumn 
             title="Resources" 
             links={[
@@ -58,7 +79,6 @@ export function Footer({ className }: { className?: string }) {
               { label: "Community", href: "#" },
             ]}
           />
-          
           <FooterColumn 
             title="Company" 
             links={[
@@ -69,52 +89,20 @@ export function Footer({ className }: { className?: string }) {
             ]}
           />
         </div>
-
-        <div className="pt-8 border-t border-neutral-800 flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="text-sm text-neutral-400">
-            © {new Date().getFullYear()} YourApp. All rights reserved.
-          </div>
-          <div className="flex flex-wrap justify-center gap-4 text-sm">
-            <a href="#" className="hover:text-white transition">
-              Terms
-            </a>
-            <a href="#" className="hover:text-white transition">
-              Privacy
-            </a>
-            <a href="#" className="hover:text-white transition">
-              Cookies
-            </a>
-            <a href="#" className="hover:text-white transition">
-              Security
-            </a>
-          </div>
+        <div className="flex flex-wrap gap-4 justify-center mt-8 text-sm text-neutral-500">
+          <a href="#" className="hover:text-white transition">
+            Privacy
+          </a>
+          <a href="#" className="hover:text-white transition">
+            Cookies
+          </a>
+          <a href="#" className="hover:text-white transition">
+            Security
+          </a>
         </div>
       </div>
     </footer>
   );
-}
+};
 
-// Footer column component
-const FooterColumn = ({ title, links }: { title: string; links: { label: string; href: string }[] }) => (
-  <div className="space-y-4">
-    <h3 className="font-semibold text-white text-lg">{title}</h3>
-    <ul className="space-y-3">
-      {links.map((link, index) => (
-        <li key={index}>
-          <a href={link.href} className="hover:text-white transition">
-            {link.label}
-          </a>
-        </li>
-      ))}
-    </ul>
-  </div>
-);
-
-// Social links data
-const socialLinks = [
-  { icon: Github, href: "https://github.com/", label: "GitHub" },
-  { icon: Twitter, href: "https://twitter.com/", label: "Twitter" },
-  { icon: Facebook, href: "https://facebook.com/", label: "Facebook" },
-  { icon: Linkedin, href: "https://linkedin.com/", label: "LinkedIn" },
-  { icon: Instagram, href: "https://instagram.com/", label: "Instagram" },
-];
+export default Footer;

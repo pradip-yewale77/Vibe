@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import {
@@ -77,7 +78,7 @@ export default function ProfileSidebar() {
                   label: "Manu Arora",
                   href: "#",
                   icon: (
-                    <img
+                    <Image
                       src="https://assets.aceternity.com/manu.png"
                       className="h-7 w-7 shrink-0 rounded-full"
                       width={50}
