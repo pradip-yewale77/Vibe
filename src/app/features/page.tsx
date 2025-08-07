@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
@@ -82,6 +82,11 @@ const FeatureCard = ({
     </div>
   );
 };
+
+// Default export for Next.js page
+export default function Page() {
+  return <FeaturesSection />;
+}
 
 const FeatureTitle = ({ children }: { children?: React.ReactNode }) => {
   return (

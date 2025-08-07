@@ -5,7 +5,7 @@
 
 import { notFound } from 'next/navigation';
 import React, { useState, useRef, useEffect } from 'react';
-import Editor, { OnChange, OnMount } from '@monaco-editor/react'
+import Editor from '@monaco-editor/react'
 import axios from 'axios';
 // import PreviewPane from '@/app/components/PreviewPane';
 
@@ -165,19 +165,6 @@ export default function WebsitePage({ params }: { params: { id: string } }) {
   const [isCreating, setIsCreating] = useState(false);
   const newItemInputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const editorRef = useRef<unknown>(null)
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  // const handleEditorDidMount: OnMount = (editor: unknown, monaco: unknown) => {
-  //   editorRef.current = editor
-  //   console.log('Editor mounted')
-  // }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  // const handleChange: OnChange = (value: string, event: unknown) => {
-  //   console.log('Content changed:', value)
-  // }
 
   if (!id) {
     notFound();
