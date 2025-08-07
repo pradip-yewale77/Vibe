@@ -149,13 +149,12 @@ app.listen(port, () => {
 ];
 
 
-// No PageProps import needed
-
-type WebsitePageProps = {
-  params?: { id?: string } | Promise<{ id?: string }>;
+// Remove the incorrect import and define PageProps type manually for Next.js app router
+type PageProps = {
+  params: { id?: string } | Promise<{ id?: string }>;
 };
 
-export default function WebsitePage(props: WebsitePageProps) {
+export default function WebsitePage(props: PageProps) {
   // Support both direct and Promise params (for Next.js compatibility)
   const [id, setId] = React.useState<string | undefined>(undefined);
   React.useEffect(() => {
