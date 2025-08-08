@@ -150,25 +150,13 @@ app.listen(port, () => {
 
 
 // Remove the incorrect import and define PageProps type manually for Next.js app router
+
 type PageProps = {
-  params: { id?: string } | Promise<{ id?: string }>;
+  params: { id: string };
 };
 
-export default function WebsitePage(props: PageProps) {
-  // Support both direct and Promise params (for Next.js compatibility)
-  const [id, setId] = React.useState<string | undefined>(undefined);
-  React.useEffect(() => {
-    const resolveParams = async () => {
-      let paramsObj: { id?: string } | undefined;
-      if (props.params && typeof (props.params as Promise<unknown>).then === 'function') {
-        paramsObj = await props.params as { id?: string };
-      } else {
-        paramsObj = props.params as { id?: string };
-      }
-      setId(paramsObj?.id);
-    };
-    resolveParams();
-  }, [props.params]);
+export default function Page(props: PageProps) {
+  const id = props.params.id;
   const [fileStructure, setFileStructure] = useState<FileStructureItem[]>(initialFileStructure);
   const [openTabs, setOpenTabs] = useState<FileItem[]>([]);
   const [activeTab, setActiveTab] = useState<string | null>(null);
@@ -186,7 +174,6 @@ export default function WebsitePage(props: PageProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (id === undefined) return;
     if (!id) {
       notFound();
     }
@@ -727,7 +714,7 @@ export default function WebsitePage(props: PageProps) {
         <div className="flex justify-between items-center mb-6">
           <div>
             <h1 className="text-2xl font-bold text-white">Dark Mode Editor</h1>
-            <p className="text-gray-400">Editing: Website ID {id ?? ''}</p>
+            <p className="text-gray-400">Editing: Website ID {id}</p>
           </div>
           <div className="flex items-center space-x-3">
             <button className="px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-700 text-white rounded-lg hover:opacity-90 transition-opacity flex items-center">
@@ -910,7 +897,7 @@ export default function WebsitePage(props: PageProps) {
                 {activeTab ? `Editing: ${activeTab}` : 'Ready'}
               </div>
               <div>
-                Website ID: {id ?? ''}
+                Website ID: {id}
               </div>
             </div>
           </div>
